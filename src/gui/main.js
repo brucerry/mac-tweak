@@ -807,7 +807,9 @@ ObjC.registerSubclass({
     methods: { isFlipped: { types: ['bool', []], implementation: function () { return true; } } }
 });
 ObjC.registerSubclass({
-    name: 'MacTweakController', superclass: 'NSObject', protocols: ['NSApplicationDelegate', 'NSWindowDelegate', 'NSControlTextEditingDelegate'],
+    // NSSearchField uses the text-field delegate. Older JXA hosts cannot
+    // resolve the base NSControlTextEditingDelegate protocol directly.
+    name: 'MacTweakController', superclass: 'NSObject', protocols: ['NSApplicationDelegate', 'NSWindowDelegate', 'NSTextFieldDelegate'],
     methods: {
         'togglePart:': { types: ['void', ['id']], implementation: function (sender) { guarded(function () {
             if (!sender.enabled) return;
@@ -1625,7 +1627,11 @@ function uxPrepareMaintenance(editor,mode){
     var index=editor.rows.map(function(row){return row.title;}).indexOf(mode==='cleanup'?'Run staging · 20261026T010000Z-999999':'Old aliases.zsh · 20261026T010000Z-999999');
     if(index<0||editor.primary.enabled)throw new Error('Maintenance must show fixture rows with nothing preselected.');
     editor.buttons[index].performClick(UI.controller);if(!editor.primary.enabled)throw new Error('Selecting an item must enable Review.');
-    var chosenId=editor.rows[index].id;editor.filter.stringValue='no-matching-fixture';MaintenanceSheet.filter(editor);if(MaintenanceSheet.visible(editor).length||!editor.chosen[chosenId]||!editor.primary.enabled)throw new Error('Filtering must preserve selected cards.');editor.filter.stringValue='';editor.show.selectItemAtIndex(2);MaintenanceSheet.filter(editor);if(MaintenanceSheet.visible(editor).length!==1)throw new Error('Selected filter must show chosen cards.');editor.show.selectItemAtIndex(0);MaintenanceSheet.filter(editor);uxBitmap(editor.panel.contentView,mode+'-inventory');UI.controller.maintenancePrimary(null);
+    var chosenId=editor.rows[index].id;editor.filter.stringValue='no-matching-fixture';
+    // Deliver the search field's own editing notification through AppKit,
+    // exercising its real delegate connection without keyboard interception.
+    $.NSNotificationCenter.defaultCenter.postNotificationNameObject('NSControlTextDidChangeNotification',editor.filter);
+    if(MaintenanceSheet.visible(editor).length||editor.cards.length||!editor.chosen[chosenId]||!editor.primary.enabled)throw new Error('Native filter editing must refresh cards and preserve selections.');editor.filter.stringValue='';editor.show.selectItemAtIndex(2);MaintenanceSheet.filter(editor);if(MaintenanceSheet.visible(editor).length!==1)throw new Error('Selected filter must show chosen cards.');editor.show.selectItemAtIndex(0);MaintenanceSheet.filter(editor);uxBitmap(editor.panel.contentView,mode+'-inventory');UI.controller.maintenancePrimary(null);
 }
 function uxCancelMaintenance() {
     var editor=UI.maintenanceSheet;
