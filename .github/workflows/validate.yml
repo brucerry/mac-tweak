@@ -58,8 +58,26 @@ jobs:
             function run(argv) {
               var source = $.NSString.stringWithContentsOfFileEncodingError(argv[0] + "/src/gui/presentation.js", $.NSUTF8StringEncoding, Ref());
               var policy = (0, eval)(ObjC.unwrap(source));
-              policy.testDesktop();
-              return "PASS: hosted desktop is safe before the idle assertion";
+              var deadline = Date.now() + 60000, last, reported = false;
+              do {
+                try {
+                  var state = policy.read();
+                  if (policy.allows(state)) {
+                    policy.testDesktop();
+                    return "PASS: hosted desktop is safe before the idle assertion";
+                  }
+                  var session = state.session || {};
+                  last = {onConsole: session.kCGSSessionOnConsoleKey, loggedIn: session.kCGSessionLoginDoneKey,
+                    locked: session.CGSSessionScreenIsLocked, front: state.front, displays: (state.displays || []).length,
+                    savers: (state.running || []).filter(function (id) { return /^com\.apple\.screensaver/i.test(id); }),
+                    screenLevel: state.screenLevel, highWindows: (state.windows || []).filter(function (window) {
+                      return Number(window.kCGWindowLayer) >= state.screenLevel && Number(window.kCGWindowAlpha) > 0.01;
+                    }).slice(0, 10).map(function (window) { return {layer: window.kCGWindowLayer, bounds: window.kCGWindowBounds}; })};
+                } catch (error) { last = {metadataError: String(error)}; }
+                if (!reported) { console.log("Waiting for hosted desktop readiness: " + JSON.stringify(last)); reported = true; }
+                $.NSRunLoop.currentRunLoop.runUntilDate($.NSDate.dateWithTimeIntervalSinceNow(1));
+              } while (Date.now() < deadline);
+              throw new Error("Hosted desktop remained protected or unavailable: " + JSON.stringify(last));
             }
           ' "$GITHUB_WORKSPACE"
           /usr/bin/caffeinate -diu -t 2700 >/dev/null 2>&1 </dev/null &
