@@ -1,0 +1,92 @@
+name: Validate Mac Tweak
+
+on:
+  workflow_call:
+    inputs:
+      revision:
+        type: string
+        required: false
+        default: ''
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      live_smoke:
+        description: Download and test pinned upstream releases in disposable homes
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: macOS 15 / ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15
+            arch: arm64
+          - runner: macos-15-intel
+            arch: x86_64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.revision || github.ref }}
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13'
+      - name: Confirm native architecture
+        run: |
+          test "$(uname -m)" = '${{ matrix.arch }}'
+          printf 'Native host: macOS %s, %s\n' "$(sw_vers -productVersion)" "$(uname -m)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Syntax and isolated behavior checks
+        run: /bin/bash tests/ci.sh
+      - name: Native maintenance cards and both appearances
+        run: python3 tests/gui-maintenance.py
+      - name: Record behavioral coverage
+        run: echo 'Isolated behavior and native maintenance UI suites passed on this host. macOS 27 gesture planning uses an explicit isolated store simulation; production gates are unchanged. Simulated alternate-host fixtures do not execute alternate-architecture binaries.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify upstream metadata and live installations
+        if: github.event_name == 'workflow_dispatch' && inputs.live_smoke
+        env:
+          MAC_TWEAK_LIVE_TEST: '1'
+        run: |
+          python3 tests/releases.py --upstream
+          python3 tests/artifact-platforms.py --live
+          /bin/bash tests/smoke.sh
+          MAC_TWEAK_PREFERENCES_LIVE_TEST=1 python3 tests/preferences-live.py
+      - name: Record live coverage
+        if: github.event_name == 'workflow_dispatch' && inputs.live_smoke && success()
+        run: echo 'Pinned upstream live installation, native tig build, verification, and repeat-run checks passed on this host.' >> "$GITHUB_STEP_SUMMARY"
+
+  package-validation:
+    name: Universal package / ${{ matrix.arch }}
+    needs: validate
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15
+            arch: arm64
+          - runner: macos-15-intel
+            arch: x86_64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.revision || github.ref }}
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13'
+      - run: python3 scripts/release/build.py
+      - run: python3 scripts/release/verify.py dist

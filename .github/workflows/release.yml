@@ -1,0 +1,59 @@
+name: Prepare Mac Tweak release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag to prepare as a draft (for example v0.1.0)
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    uses: ./.github/workflows/validate.yml
+    with:
+      revision: refs/tags/${{ github.event.inputs.tag || github.ref_name }}
+  package:
+    needs: validate
+    runs-on: macos-15
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: refs/tags/${{ github.event.inputs.tag || github.ref_name }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13'
+      - name: Validate tag and prepare release notes
+        run: python3 scripts/release/notes.py --tag "$RELEASE_TAG" --output "$RUNNER_TEMP/release-notes.md"
+      - name: Build universal unsigned artifacts
+        run: python3 scripts/release/build.py
+      - name: Inspect artifacts without installing
+        run: python3 scripts/release/verify.py dist
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: MacTweak-${{ github.event.inputs.tag || github.ref_name }}-macos
+          path: dist/MacTweak-*
+          if-no-files-found: error
+      - name: Create an unpublished draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "$RELEASE_TAG" dist/MacTweak-* --verify-tag --draft --title "$RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md"
+          echo 'Validated universal macOS artifacts uploaded to an unpublished draft. Review the draft before publishing.' >> "$GITHUB_STEP_SUMMARY"
