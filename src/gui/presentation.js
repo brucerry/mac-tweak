@@ -30,8 +30,35 @@
         return {session:ObjC.deepUnwrap(ObjC.castRefToObject($.CGSessionCopyCurrentDictionary())),front:ObjC.unwrap(workspace.frontmostApplication.bundleIdentifier)||'',running:ids,displays:displays,
             windows:ObjC.deepUnwrap(ObjC.castRefToObject($.CGWindowListCopyWindowInfo(1|16,0))),screenLevel:Number($.CGWindowLevelForKey($.kCGScreenSaverWindowLevelKey))};
     }
-    function safe(){try{return allows(read());}catch(_){return false;}}
+    function inspect(){try{var state=read();return {safe:allows(state),state:state};}catch(error){return {safe:false,error:String(error)};}}
+    function describe(observation){
+        if(observation.error)return 'Metadata unavailable: '+observation.error;
+        var state=observation.state||{},session=state.session||{};
+        return JSON.stringify({onConsole:session.kCGSSessionOnConsoleKey,loggedIn:session.kCGSessionLoginDoneKey,
+            locked:session.CGSSessionScreenIsLocked,front:state.front,displays:(state.displays||[]).length,
+            savers:(state.running||[]).filter(function(id){return /^com\.apple\.screensaver/i.test(id);}),
+            screenLevel:state.screenLevel,highWindows:(state.windows||[]).filter(function(window){
+                return Number(window.kCGWindowLayer)>=state.screenLevel&&Number(window.kCGWindowAlpha)>0.01;
+            }).slice(0,10).map(function(window){return {layer:window.kCGWindowLayer,bounds:window.kCGWindowBounds};})});
+    }
+    function desktopError(observation){return new Error('Native UI checks require an unlocked desktop without an active screen saver. No visual service was activated or stopped. Context: '+describe(observation));}
+    function safe(){return inspect().safe;}
+    // Test launchers wait outside an app event loop for workspace handoff to
+    // settle. The caller must still perform the ordinary native safety check.
+    function waitForDesktop(milliseconds,adapter){
+        if(!Number.isFinite(milliseconds)||milliseconds<250||milliseconds>5000)throw new Error('Invalid desktop readiness timeout.');
+        adapter=adapter||{now:function(){return Number($.NSProcessInfo.processInfo.systemUptime)*1000;},inspect:inspect,
+            pause:function(duration){$.NSRunLoop.currentRunLoop.runUntilDate($.NSDate.dateWithTimeIntervalSinceNow(duration/1000));}};
+        var deadline=adapter.now()+milliseconds,stableSince=null,last;
+        while(true){
+            var now=adapter.now();last=adapter.inspect();
+            if(last.safe){if(stableSince===null)stableSince=now;if(now-stableSince>=250)return;}
+            else stableSince=null;
+            if(now>=deadline)throw desktopError(last);
+            adapter.pause(Math.min(50,deadline-now));
+        }
+    }
     var checkedAt=-Infinity;
-    function testDesktop(){if(Date.now()-checkedAt<250)return;if(!safe())throw new Error('Native UI checks require an unlocked desktop without an active screen saver. No visual service was activated or stopped.');checkedAt=Date.now();}
-    return {allows:allows,safe:safe,read:read,testDesktop:testDesktop};
+    function testDesktop(){if(Date.now()-checkedAt<250)return;var observation=inspect();if(!observation.safe)throw desktopError(observation);checkedAt=Date.now();}
+    return {allows:allows,safe:safe,read:read,testDesktop:testDesktop,waitForDesktop:waitForDesktop};
 }())

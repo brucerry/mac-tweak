@@ -16,7 +16,11 @@ function run(argv){
         var value=io.read(path,32).trim();if(!/^[1-9][0-9]{0,8}$/.test(value))throw new Error('Invalid launcher interrupt request.');return value;
     }
     var presentation=(0,eval)(text(root+'/src/gui/presentation.js')),safeDesktop=presentation.safe();
-    if(io.env('MAC_TWEAK_GUI_TEST')==='1')presentation.testDesktop();
+    if(io.env('MAC_TWEAK_GUI_TEST')==='1'){
+        presentation.waitForDesktop(3000);
+        presentation.testDesktop();
+        safeDesktop=true;
+    }
     var cache=context.home+'/Library/Caches/'+metadata.bundleIdentifier+'/hosts',key=io.hex(io.shaText(root+'\n'+text(root+'/src/app/bootstrap.js')+'\n'+JSON.stringify(metadata))),base=cache+'/'+key,app=base+'/Mac Tweak.app';
     if(!io.safeAncestors(base,context.home,false))throw new Error('Unsafe app cache location.');io.mkdir(base);
     if(!io.attributes(app)){
