@@ -807,9 +807,9 @@ ObjC.registerSubclass({
     methods: { isFlipped: { types: ['bool', []], implementation: function () { return true; } } }
 });
 ObjC.registerSubclass({
-    // NSSearchField uses the text-field delegate. Older JXA hosts cannot
-    // resolve the base NSControlTextEditingDelegate protocol directly.
-    name: 'MacTweakController', superclass: 'NSObject', protocols: ['NSApplicationDelegate', 'NSWindowDelegate', 'NSTextFieldDelegate'],
+    // Delegate selectors below supply their Objective-C signatures explicitly.
+    // Avoid protocol lookup, which fails in older JXA runtimes during loading.
+    name: 'MacTweakController', superclass: 'NSObject',
     methods: {
         'togglePart:': { types: ['void', ['id']], implementation: function (sender) { guarded(function () {
             if (!sender.enabled) return;

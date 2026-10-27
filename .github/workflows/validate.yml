@@ -48,6 +48,8 @@ jobs:
         run: |
           test "$(uname -m)" = '${{ matrix.arch }}'
           printf 'Native host: macOS %s, %s\n' "$(sw_vers -productVersion)" "$(uname -m)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Native GUI startup
+        run: python3 tests/gui.py
       - name: Syntax and isolated behavior checks
         run: /bin/bash tests/ci.sh
       - name: Native maintenance cards and both appearances
