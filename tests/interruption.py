@@ -97,11 +97,16 @@ fi
                     os.killpg(process.pid, termination)
                     assert process.wait(timeout=10) != 0
                 finally:
-                    # Only this test's isolated process group is ever signalled.
-                    try:
-                        os.killpg(process.pid, signal.SIGKILL)
-                    except ProcessLookupError:
-                        pass
+                    # Keep group ownership anchored to a live, unreaped leader.
+                    # After wait(), the numeric group may have gone or been reused.
+                    if process.poll() is None:
+                        try:
+                            os.killpg(process.pid, signal.SIGKILL)
+                        except ProcessLookupError:
+                            pass
+                        except PermissionError:
+                            if process.poll() is None:
+                                raise
                     process.wait(timeout=10)
             output = (case / "interrupted.log").read_text()
             assert "Application complete." not in output, output

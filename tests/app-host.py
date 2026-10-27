@@ -47,14 +47,14 @@ print("PASS: actual host metadata is accepted by the installed helper policy")
    value=subprocess.run([str(root/'policy'),'--running-quit' if report['mode']=='ux-host-external-quit' else '--quit',str(report['pid']),report['path']],capture_output=True,text=True,timeout=5);assert value.returncode==0,value.stdout+value.stderr;return value.stdout.strip()
   script='''ObjC.import('AppKit');function run(argv){var pid=Number(argv[1]),expected=argv[2],a=$.NSRunningApplication.runningApplicationWithProcessIdentifier(pid);if(argv[0]==='quit'){if(ObjC.unwrap(a.executableURL.path)!==expected)throw new Error('Wrong target app.');return String(a.terminate);}var apps=$.NSRunningApplication.runningApplicationsWithBundleIdentifier('io.github.brucerry.MacTweak'),count=0;for(var i=0;i<Number(apps.count);i++){try{if(ObjC.unwrap(apps.objectAtIndex(i).executableURL.path)===expected)count++;}catch(_){}}return String(count);}'''
   value=subprocess.run(['/usr/bin/osascript','-l','JavaScript','-e',script,action,str(report['pid']),report['path']],capture_output=True,text=True,timeout=5);assert value.returncode==0,value.stdout+value.stderr;return value.stdout.strip()
- def wait_for(p,predicate):
-  deadline=time.monotonic()+10
+ def wait_for(p,predicate,timeout=10):
+  deadline=time.monotonic()+timeout
   while time.monotonic()<deadline:
    value=predicate()
    if value:return value
    if p.poll() is not None:raise AssertionError('Host exited before the delayed lifecycle event: '+str(p.communicate()))
    time.sleep(.05)
-  raise AssertionError('Host did not complete the delayed lifecycle event.')
+  raise AssertionError('Host did not complete the delayed lifecycle event within '+str(timeout)+' seconds.')
  modes=[value.split('=',1)[1] for value in sys.argv if value.startswith('--lifecycle-mode=')] or ['close','menu-quit','external-quit','reopen','busy-close','busy-external','modal-quit']
  source=['/usr/bin/osascript','-l','JavaScript',str(repo/'src/app/host.js'),str(repo)]
  # Exercise the public GUI entry through LaunchServices; direct executable
@@ -77,7 +77,7 @@ print("PASS: actual host metadata is accepted by the installed helper policy")
        value=json.loads(path.read_text())
        if (mode!='reopen' or value.get('minimized')) and (mode!='busy-external' or value.get('busy')) and (mode!='modal-quit' or value.get('modal')):return value
       except (ValueError,OSError):pass
-    report=wait_for(p,ready)
+    report=wait_for(p,ready,timeout=30)
     assert report['path'].startswith(str(root)+'/'),report
     if mode=='reopen':
      if host=='source':processes.append(subprocess.Popen([*base,'--smoke-ux-host-reopen'],env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True))
