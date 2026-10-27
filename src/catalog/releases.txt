@@ -1,0 +1,9 @@
+# tool|install-version|min-existing|max-existing-exclusive|arch|min-macos|format|url|sha256|archive-root|commands|binary-directory
+node|24.22.1|24.22.1|25.0.0|arm64|13.5|tar|https://nodejs.org/dist/v24.22.1/node-v24.22.1-darwin-arm64.tar.gz|89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7|node-v24.22.1-darwin-arm64|node,npm,npx|bin
+node|24.22.1|24.22.1|25.0.0|x64|13.5|tar|https://nodejs.org/dist/v24.22.1/node-v24.22.1-darwin-x64.tar.gz|d132557e7ee2b85af08b0c8c34338e65c6430f2238d01f727728ef42dc83b035|node-v24.22.1-darwin-x64|node,npm,npx|bin
+uv|0.13.5|0.13.5|0.14.0|arm64|13.0|tar|https://github.com/astral-sh/uv/releases/download/0.13.5/uv-aarch64-apple-darwin.tar.gz|743f85035a1996ecb350659e01cd9faea9709829be09b1b4b03c73eaf3c9cd73|uv-aarch64-apple-darwin|uv,uvx|.
+uv|0.13.5|0.13.5|0.14.0|x64|13.0|tar|https://github.com/astral-sh/uv/releases/download/0.13.5/uv-x86_64-apple-darwin.tar.gz|b0f52b0e3945b4107d89024ea38e625683011fbfc05a0d98f9fa2d6dcee28c66|uv-x86_64-apple-darwin|uv,uvx|.
+gh|2.103.2|2.103.2|3.0.0|arm64|13.0|zip|https://github.com/cli/cli/releases/download/v2.103.2/gh_2.103.2_macOS_arm64.zip|5416000f5d17580a187339e0c4068a01ca5c87f7d4fe6ca64933696f967bc418|gh_2.103.2_macOS_arm64|gh|bin
+gh|2.103.2|2.103.2|3.0.0|x64|13.0|zip|https://github.com/cli/cli/releases/download/v2.103.2/gh_2.103.2_macOS_amd64.zip|2dc7f1fc4761f96732995f6e4f4c6b4d705f2635da4126620c8b30eaa67b9c98|gh_2.103.2_macOS_amd64|gh|bin
+tig|2.6.1|2.6.1|3.0.0|arm64|13.0|source|https://github.com/jonas/tig/releases/download/tig-2.6.1/tig-2.6.1.tar.gz|5adeabdcd93aa0423d618da8b878b53482bef6e0e9e1fe224acc0f18031fe91e|tig-2.6.1|tig|bin
+tig|2.6.1|2.6.1|3.0.0|x64|13.0|source|https://github.com/jonas/tig/releases/download/tig-2.6.1/tig-2.6.1.tar.gz|5adeabdcd93aa0423d618da8b878b53482bef6e0e9e1fe224acc0f18031fe91e|tig-2.6.1|tig|bin

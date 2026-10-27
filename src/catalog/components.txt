@@ -1,0 +1,31 @@
+# id|kind|dependencies|purpose|changes|prerequisites|recovery
+node|tool|local-bin-path|Node.js and npm development tools|Install node, npm, npx under your home directory|Supported macOS and CPU; curl, tar, shasum|Restore the recorded previous tool pointer; see docs/recovery.md
+uv|tool|local-bin-path|Python environments and packages with uv|Install uv and uvx under your home directory|Supported macOS and CPU; curl, tar, shasum|Restore the recorded previous tool pointer; see docs/recovery.md
+gh|tool|local-bin-path|GitHub from the command line|Install gh under your home directory; sign in separately|Supported macOS and CPU; curl, tar, shasum|Restore the recorded previous tool pointer; see docs/recovery.md
+tig|tool|local-bin-path|Interactive text interface for Git|Build and install tig under your home directory|Git and Apple Command Line Tools with clang, make, ncurses|Restore the recorded previous tool pointer; see docs/recovery.md
+prompt|shell|-|Bruce's bold colored zsh prompt|Override PROMPT after existing zshrc text; show your user, host and directory|macOS zsh; regular writable zsh startup files|Restore startup files and snippets from the run backup; see docs/recovery.md
+aliases|shell|-|Convenient macOS ls aliases|Override ls='ls -G' and ll='ls -al' after existing zshrc text|macOS zsh and ls; regular writable zsh startup files|Restore startup files and snippets from the run backup; see docs/recovery.md
+colors|shell|-|File-type colors in macOS ls|Set CLICOLOR=1 and LSCOLORS=ExGxFxdxCxDxDxabagacadah after existing zshrc text|macOS zsh and ls; regular writable zsh startup files|Restore startup files and snippets from the run backup; see docs/recovery.md
+local-bin-path|shell|-|Make selected user-local tools visible to zsh|Prepend and deduplicate your ~/.local/bin in login and interactive zsh|macOS zsh; regular writable zprofile and zshrc|Restore startup files and path snippet from run backup; see docs/recovery.md
+finder|preference|-|Finder preferences|Set the selected Finder view and display preferences|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+dock|preference|-|Dock appearance and behavior|Set the selected Dock appearance and behavior|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+keyboard|preference|-|Keyboard typing preferences|Set the selected keyboard repeat and typing preferences|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+screenshots|preference|-|Screenshot preferences|Set the selected screenshot format and appearance|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+appearance|preference|-|Appearance|Set selected appearance|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+accessibility|preference|-|Accessibility|Set selected accessibility|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+mouse|preference|-|Mouse|Set selected mouse|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+trackpad|preference|-|Trackpad|Set selected trackpad|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+windows|preference|-|Windows|Set selected windows|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+desktop|preference|-|Desktop|Set selected desktop|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+sound|preference|-|Sound|Set selected sound|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+spotlight|preference|-|Spotlight|Set selected spotlight|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+terminal|preference|-|Terminal preferences|Set selected terminal preferences|Supported macOS; editable per-user preferences|Restore recorded preference originals; see docs/recovery.md
+gestures|preference|-|Dock & Windows gestures|Configure DockMinimizer and its selected behavior|Apple Command Line Tools; Accessibility for window actions|Restore helper app and preference records; see docs/recovery.md
+closing|preference|-|App close behavior|Configure QuitOnRed and its selected behavior|Apple Command Line Tools; Accessibility for window actions|Restore helper app and preference records; see docs/recovery.md
+windowskeys|preference|-|Windows keyboard|Configure WindowsKeys and its selected behavior|Apple Command Line Tools; Accessibility for window actions|Restore helper app and preference records; see docs/recovery.md
+terminalprofile|profile|-|Terminal appearance and shell exit|Install sanitized Dark and Light profiles; shell exit closes its window|Terminal; choose the desired profile through Utilities after Apply|Restore recorded profile files; existing Terminal profiles are preserved
+wallpaper|guided|-|Wallpaper|Choose wallpaper and display-specific visuals in macOS settings|macOS Wallpaper settings|Use macOS Wallpaper settings to restore the previous selection
+screensaver|preference|-|Screen saver|Review idle timing; choose screen-saver visuals in macOS settings|Editable per-user per-host preferences; macOS settings for visuals|Restore the recorded timing original; reselect visuals in macOS settings
+protection|guided|-|Screen protection|Configure lock passwords and display sleep in macOS settings|macOS may require authentication or managed-policy approval|Use macOS Lock Screen settings to restore choices
+displays|guided|-|Display|Configure brightness, resolution and display arrangement in macOS settings|macOS Display settings; options depend on connected displays|Use macOS Display settings to restore choices
+power|guided|-|Power|Configure battery and energy options in macOS settings|macOS Battery or Energy settings; options depend on this Mac|Use macOS Battery or Energy settings to restore choices

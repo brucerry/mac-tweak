@@ -1,0 +1,9 @@
+{
+  "name": "Mac Tweak",
+  "version": "0.1.0",
+  "bundleIdentifier": "io.github.brucerry.MacTweak",
+  "repository": "https://github.com/brucerry/mac-tweak",
+  "minimumMacOS": "13.0",
+  "license": "MIT",
+  "copyright": "Copyright © 2026 Bruce Cheung"
+}

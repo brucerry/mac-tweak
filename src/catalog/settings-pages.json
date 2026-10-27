@@ -1,0 +1,53 @@
+{
+  "wallpaper": {
+    "title": "Wallpaper",
+    "note": "Choose still, dynamic or aerial wallpaper in macOS. Those changes apply immediately; Cancel discards only this app draft.",
+    "actions": [
+      {
+        "title": "Choose wallpaper…",
+        "url": "x-apple.systempreferences:com.apple.Wallpaper-Settings.extension"
+      }
+    ]
+  },
+  "screensaver": {
+    "title": "Screen saver",
+    "note": "Choose visuals in macOS; 0 minutes means Never. Changes in macOS apply immediately; Cancel discards only this app draft.",
+    "actions": [
+      {
+        "title": "Choose screen saver…",
+        "url": "x-apple.systempreferences:com.apple.ScreenSaver-Settings.extension",
+        "fallback": "x-apple.systempreferences:com.apple.Wallpaper-Settings.extension?ScreenSaver"
+      }
+    ]
+  },
+  "protection": {
+    "title": "Screen protection",
+    "note": "Set lock passwords and display sleep in macOS. Changes apply there immediately.",
+    "actions": [
+      {
+        "title": "Lock & display sleep…",
+        "url": "x-apple.systempreferences:com.apple.Lock-Screen-Settings.extension"
+      }
+    ]
+  },
+  "displays": {
+    "title": "Display",
+    "note": "Choose brightness, resolution and display arrangement in macOS. Changes apply there immediately.",
+    "actions": [
+      {
+        "title": "Display settings…",
+        "url": "x-apple.systempreferences:com.apple.Displays-Settings.extension"
+      }
+    ]
+  },
+  "power": {
+    "title": "Power",
+    "note": "Choose battery and energy options for this Mac in macOS. Changes apply there immediately.",
+    "actions": [
+      {
+        "title": "Battery & power…",
+        "url": "x-apple.systempreferences:com.apple.Battery-Settings.extension"
+      }
+    ]
+  }
+}

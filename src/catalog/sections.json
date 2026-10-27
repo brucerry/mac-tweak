@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "sections": [
+    {
+      "id": "terminal",
+      "title": "Terminal",
+      "kind": "shell",
+      "accent": "coral"
+    },
+    {
+      "id": "terminal-app",
+      "title": "Terminal app",
+      "kind": "profile",
+      "accent": "blue"
+    },
+    {
+      "id": "development",
+      "title": "Development",
+      "kind": "tool",
+      "accent": "teal"
+    },
+    {
+      "id": "system",
+      "title": "System",
+      "kind": "preference",
+      "accent": "accent"
+    },
+    {
+      "id": "behaviors",
+      "title": "Behavior",
+      "kind": "preference",
+      "accent": "rose"
+    },
+    {
+      "id": "display",
+      "title": "Display & power",
+      "kind": "preference",
+      "accent": "olive"
+    }
+  ]
+}

@@ -1,0 +1,1582 @@
+{
+  "version": 1,
+  "settings": [
+    {
+      "id": "finder-view",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "FXPreferredViewStyle",
+      "label": "Default window view",
+      "type": "string",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": "Nlsv"
+      },
+      "values": [
+        "icnv",
+        "Nlsv",
+        "clmv"
+      ],
+      "titles": [
+        "Icons",
+        "List",
+        "Columns"
+      ]
+    },
+    {
+      "id": "finder-hidden",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "AppleShowAllFiles",
+      "label": "Show hidden files",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-path",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "ShowPathbar",
+      "label": "Show path bar",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-status",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "ShowStatusBar",
+      "label": "Show status bar",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-folders-first",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "_FXSortFoldersFirst",
+      "label": "Sort folders first",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-extension-warning",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "FXEnableExtensionChangeWarning",
+      "label": "Warn before changing extensions",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-extensions",
+      "component": "finder",
+      "domain": "NSGlobalDomain",
+      "key": "AppleShowAllExtensions",
+      "label": "Show file extensions",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "dock-autohide",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "autohide",
+      "label": "Automatically hide",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "dock-size",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "tilesize",
+      "label": "Icon size",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": 49
+      },
+      "minimum": 16,
+      "maximum": 128
+    },
+    {
+      "id": "dock-magnification",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "magnification",
+      "label": "Magnify icons",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "dock-magnified-size",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "largesize",
+      "label": "Magnified size",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": 59
+      },
+      "minimum": 16,
+      "maximum": 128
+    },
+    {
+      "id": "dock-position",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "orientation",
+      "label": "Position",
+      "type": "string",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": "bottom"
+      },
+      "values": [
+        "left",
+        "bottom",
+        "right"
+      ],
+      "titles": [
+        "Left",
+        "Bottom",
+        "Right"
+      ]
+    },
+    {
+      "id": "dock-minimize",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "minimize-to-application",
+      "label": "Minimize into app icon",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "dock-recent",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "show-recents",
+      "label": "Show recent apps",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": false
+      }
+    },
+    {
+      "id": "keyboard-repeat",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "KeyRepeat",
+      "label": "Key repeat interval",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": 2
+      },
+      "minimum": 2,
+      "maximum": 120
+    },
+    {
+      "id": "keyboard-delay",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "InitialKeyRepeat",
+      "label": "Delay until repeat",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": 25
+      },
+      "minimum": 15,
+      "maximum": 120
+    },
+    {
+      "id": "keyboard-capitalization",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "NSAutomaticCapitalizationEnabled",
+      "label": "Capitalize automatically",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "keyboard-period",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "NSAutomaticPeriodSubstitutionEnabled",
+      "label": "Double-space adds a period",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "keyboard-spelling",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "NSAutomaticSpellingCorrectionEnabled",
+      "label": "Correct spelling automatically",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "screenshots-format",
+      "component": "screenshots",
+      "domain": "com.apple.screencapture",
+      "key": "type",
+      "label": "File format",
+      "type": "string",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "keep"
+      },
+      "values": [
+        "png",
+        "jpg",
+        "pdf",
+        "tiff"
+      ],
+      "titles": [
+        "PNG",
+        "JPEG",
+        "PDF",
+        "TIFF"
+      ]
+    },
+    {
+      "id": "screenshots-shadow",
+      "component": "screenshots",
+      "domain": "com.apple.screencapture",
+      "key": "disable-shadow",
+      "label": "Disable window shadows",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "screenshots-thumbnail",
+      "component": "screenshots",
+      "domain": "com.apple.screencapture",
+      "key": "show-thumbnail",
+      "label": "Show floating thumbnail",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Sign out and back in if the saved setting is not visible.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-trash-warning",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "WarnOnEmptyTrash",
+      "label": "Warn before emptying Trash",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-desktop-icons",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "CreateDesktop",
+      "label": "Show desktop icons",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-internal-disks",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "ShowHardDrivesOnDesktop",
+      "label": "Internal disks on desktop",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-external-disks",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "ShowExternalHardDrivesOnDesktop",
+      "label": "External disks on desktop",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-removable",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "ShowRemovableMediaOnDesktop",
+      "label": "Removable media on desktop",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-servers",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "ShowMountedServersOnDesktop",
+      "label": "Servers on desktop",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "finder-save-folders-first",
+      "component": "finder",
+      "domain": "com.apple.finder",
+      "key": "_FXSortFoldersFirstOnDesktop",
+      "label": "Folders first on desktop",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "dock-launch-animation",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "launchanim",
+      "label": "Animate opening apps",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "dock-indicators",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "show-process-indicators",
+      "label": "Running app indicators",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "dock-scroll-open",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "scroll-to-open",
+      "label": "Scroll Dock icons to show windows",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "dock-single-app",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "single-app",
+      "label": "Hide other apps when selecting an app",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "dock-hidden-transparency",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "showhidden",
+      "label": "Dim hidden apps",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "dock-effect",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "mineffect",
+      "label": "Minimize animation",
+      "type": "string",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "values": [
+        "genie",
+        "scale"
+      ],
+      "titles": [
+        "Genie",
+        "Scale"
+      ]
+    },
+    {
+      "id": "dock-hide-delay",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "autohide-delay",
+      "label": "Auto-hide delay (seconds)",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "minimum": 0,
+      "maximum": 10,
+      "step": 0.05
+    },
+    {
+      "id": "dock-hide-time",
+      "component": "dock",
+      "domain": "com.apple.dock",
+      "key": "autohide-time-modifier",
+      "label": "Auto-hide animation (seconds)",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "minimum": 0,
+      "maximum": 5,
+      "step": 0.05
+    },
+    {
+      "id": "keyboard-press-hold",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "ApplePressAndHoldEnabled",
+      "label": "Hold letters for accent picker",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "set",
+        "value": false
+      }
+    },
+    {
+      "id": "keyboard-smart-quotes",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "NSAutomaticQuoteSubstitutionEnabled",
+      "label": "Smart quotes",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "keyboard-smart-dashes",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "NSAutomaticDashSubstitutionEnabled",
+      "label": "Smart dashes",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "keyboard-text-replacement",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "NSAutomaticTextReplacementEnabled",
+      "label": "Text replacement",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "keyboard-inline-prediction",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "NSAutomaticInlinePredictionEnabled",
+      "label": "Inline predictions",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "keyboard-function-keys",
+      "component": "keyboard",
+      "domain": "NSGlobalDomain",
+      "key": "com.apple.keyboard.fnState",
+      "label": "F1\u2013F12 as function keys",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "keyboard-caps-input",
+      "component": "keyboard",
+      "domain": "com.apple.HIToolbox",
+      "key": "AppleCapsLockSwitchToABC",
+      "label": "Caps Lock switches input language",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "screenshots-date",
+      "component": "screenshots",
+      "domain": "com.apple.screencapture",
+      "key": "include-date",
+      "label": "Include date in filename",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "screenshots-clipboard",
+      "component": "screenshots",
+      "domain": "com.apple.screencapture",
+      "key": "target",
+      "label": "Save screenshots to",
+      "type": "string",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "values": [
+        "file",
+        "clipboard"
+      ],
+      "titles": [
+        "File",
+        "Clipboard"
+      ]
+    },
+    {
+      "id": "appearance-style",
+      "component": "appearance",
+      "domain": "NSGlobalDomain",
+      "key": "AppleInterfaceStyle",
+      "label": "Dark appearance",
+      "type": "string",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Explicit Light or Dark can change Automatic wallpaper appearance. Keep current preserves your appearance.",
+      "choice": {
+        "mode": "keep"
+      },
+      "values": [
+        "Dark"
+      ],
+      "titles": [
+        "Dark (use default for Light)"
+      ]
+    },
+    {
+      "id": "appearance-auto",
+      "component": "appearance",
+      "domain": "NSGlobalDomain",
+      "key": "AppleInterfaceStyleSwitchesAutomatically",
+      "label": "Automatic appearance",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "appearance-accent",
+      "component": "appearance",
+      "domain": "NSGlobalDomain",
+      "key": "AppleAccentColor",
+      "label": "Accent color index",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "minimum": -1,
+      "maximum": 6
+    },
+    {
+      "id": "appearance-scrollbars",
+      "component": "appearance",
+      "domain": "NSGlobalDomain",
+      "key": "AppleShowScrollBars",
+      "label": "Show scroll bars",
+      "type": "string",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "values": [
+        "Automatic",
+        "WhenScrolling",
+        "Always"
+      ],
+      "titles": [
+        "Automatic",
+        "When scrolling",
+        "Always"
+      ]
+    },
+    {
+      "id": "appearance-tabs",
+      "component": "appearance",
+      "domain": "NSGlobalDomain",
+      "key": "AppleKeyboardUIMode",
+      "label": "Keyboard focus navigation",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "minimum": 0,
+      "maximum": 3
+    },
+    {
+      "id": "accessibility-reduce-motion",
+      "component": "accessibility",
+      "domain": "com.apple.universalaccess",
+      "key": "reduceMotion",
+      "label": "Reduce motion",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "accessibility-reduce-transparency",
+      "component": "accessibility",
+      "domain": "com.apple.universalaccess",
+      "key": "reduceTransparency",
+      "label": "Reduce transparency",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "accessibility-contrast",
+      "component": "accessibility",
+      "domain": "com.apple.universalaccess",
+      "key": "increaseContrast",
+      "label": "Increase contrast",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "mouse-natural",
+      "component": "mouse",
+      "domain": "NSGlobalDomain",
+      "key": "com.apple.swipescrolldirection",
+      "label": "Natural scrolling",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "set",
+        "value": false
+      }
+    },
+    {
+      "id": "mouse-speed",
+      "component": "mouse",
+      "domain": "NSGlobalDomain",
+      "key": "com.apple.mouse.scaling",
+      "label": "Pointer speed",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "minimum": -1,
+      "maximum": 3,
+      "step": 0.125
+    },
+    {
+      "id": "mouse-secondary",
+      "component": "mouse",
+      "domain": "com.apple.driver.AppleBluetoothMultitouch.mouse",
+      "key": "MouseButtonMode",
+      "label": "Secondary click",
+      "type": "string",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "values": [
+        "OneButton",
+        "TwoButton"
+      ],
+      "titles": [
+        "Off",
+        "On"
+      ]
+    },
+    {
+      "id": "mouse-zoom",
+      "component": "mouse",
+      "domain": "com.apple.driver.AppleBluetoothMultitouch.mouse",
+      "key": "MouseButtonDivision",
+      "label": "Button division",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "minimum": 0,
+      "maximum": 100
+    },
+    {
+      "id": "trackpad-built-in-tap",
+      "component": "trackpad",
+      "domain": "com.apple.AppleMultitouchTrackpad",
+      "key": "Clicking",
+      "label": "Tap to click \u00b7 built-in",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-built-in-secondary",
+      "component": "trackpad",
+      "domain": "com.apple.AppleMultitouchTrackpad",
+      "key": "TrackpadRightClick",
+      "label": "Secondary click \u00b7 built-in",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-built-in-drag",
+      "component": "trackpad",
+      "domain": "com.apple.AppleMultitouchTrackpad",
+      "key": "TrackpadThreeFingerDrag",
+      "label": "Three-finger dragging \u00b7 built-in",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-built-in-drag-lock",
+      "component": "trackpad",
+      "domain": "com.apple.AppleMultitouchTrackpad",
+      "key": "DragLock",
+      "label": "Drag lock \u00b7 built-in",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-built-in-pinch",
+      "component": "trackpad",
+      "domain": "com.apple.AppleMultitouchTrackpad",
+      "key": "TrackpadPinch",
+      "label": "Pinch zoom \u00b7 built-in",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-built-in-rotate",
+      "component": "trackpad",
+      "domain": "com.apple.AppleMultitouchTrackpad",
+      "key": "TrackpadRotate",
+      "label": "Rotate gesture \u00b7 built-in",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-bluetooth-tap",
+      "component": "trackpad",
+      "domain": "com.apple.driver.AppleBluetoothMultitouch.trackpad",
+      "key": "Clicking",
+      "label": "Tap to click \u00b7 bluetooth",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-bluetooth-secondary",
+      "component": "trackpad",
+      "domain": "com.apple.driver.AppleBluetoothMultitouch.trackpad",
+      "key": "TrackpadRightClick",
+      "label": "Secondary click \u00b7 bluetooth",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-bluetooth-drag",
+      "component": "trackpad",
+      "domain": "com.apple.driver.AppleBluetoothMultitouch.trackpad",
+      "key": "TrackpadThreeFingerDrag",
+      "label": "Three-finger dragging \u00b7 bluetooth",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-bluetooth-drag-lock",
+      "component": "trackpad",
+      "domain": "com.apple.driver.AppleBluetoothMultitouch.trackpad",
+      "key": "DragLock",
+      "label": "Drag lock \u00b7 bluetooth",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-bluetooth-pinch",
+      "component": "trackpad",
+      "domain": "com.apple.driver.AppleBluetoothMultitouch.trackpad",
+      "key": "TrackpadPinch",
+      "label": "Pinch zoom \u00b7 bluetooth",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "trackpad-bluetooth-rotate",
+      "component": "trackpad",
+      "domain": "com.apple.driver.AppleBluetoothMultitouch.trackpad",
+      "key": "TrackpadRotate",
+      "label": "Rotate gesture \u00b7 bluetooth",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "windows-title-action",
+      "component": "windows",
+      "domain": "NSGlobalDomain",
+      "key": "AppleActionOnDoubleClick",
+      "label": "Double-click title bar",
+      "type": "string",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "values": [
+        "Minimize",
+        "Maximize",
+        "None"
+      ],
+      "titles": [
+        "Minimize",
+        "Fill / zoom",
+        "Do nothing"
+      ]
+    },
+    {
+      "id": "windows-group",
+      "component": "windows",
+      "domain": "com.apple.dock",
+      "key": "expose-group-apps",
+      "label": "Group windows by application",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "windows-spaces-order",
+      "component": "windows",
+      "domain": "com.apple.dock",
+      "key": "mru-spaces",
+      "label": "Reorder Spaces by recent use",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "windows-switch-space",
+      "component": "windows",
+      "domain": "com.apple.dock",
+      "key": "workspaces-auto-swoosh",
+      "label": "Switch to app\u2019s Space",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "windows-span",
+      "component": "windows",
+      "domain": "com.apple.spaces",
+      "key": "spans-displays",
+      "label": "Spaces span multiple displays",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "windows-close-confirm",
+      "component": "windows",
+      "domain": "NSGlobalDomain",
+      "key": "NSCloseAlwaysConfirmsChanges",
+      "label": "Ask to keep changes on close",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "windows-restore",
+      "component": "windows",
+      "domain": "NSGlobalDomain",
+      "key": "NSQuitAlwaysKeepsWindows",
+      "label": "Restore windows on reopening",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "windows-tabs",
+      "component": "windows",
+      "domain": "NSGlobalDomain",
+      "key": "AppleWindowTabbingMode",
+      "label": "Prefer tabs",
+      "type": "string",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "values": [
+        "always",
+        "fullscreen",
+        "manual"
+      ],
+      "titles": [
+        "Always",
+        "In full screen",
+        "Manually"
+      ]
+    },
+    {
+      "id": "desktop-stage-manager",
+      "component": "desktop",
+      "domain": "com.apple.WindowManager",
+      "key": "GloballyEnabled",
+      "label": "Stage Manager",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "desktop-desktop-widgets",
+      "component": "desktop",
+      "domain": "com.apple.WindowManager",
+      "key": "StandardWidgetAppearance",
+      "label": "Desktop widget appearance",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "minimum": 0,
+      "maximum": 2
+    },
+    {
+      "id": "desktop-show",
+      "component": "desktop",
+      "domain": "com.apple.WindowManager",
+      "key": "StandardHideDesktopIcons",
+      "label": "Hide desktop items",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "desktop-click",
+      "component": "desktop",
+      "domain": "com.apple.WindowManager",
+      "key": "EnableStandardClickToShowDesktop",
+      "label": "Click wallpaper to show desktop",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "sound-feedback",
+      "component": "sound",
+      "domain": "NSGlobalDomain",
+      "key": "com.apple.sound.beep.feedback",
+      "label": "Volume-change feedback",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "sound-ui",
+      "component": "sound",
+      "domain": "com.apple.systemsound",
+      "key": "com.apple.sound.uiaudio.enabled",
+      "label": "Interface sound effects",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "sound-beep",
+      "component": "sound",
+      "domain": "NSGlobalDomain",
+      "key": "com.apple.sound.beep.volume",
+      "label": "Alert volume",
+      "type": "number",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      },
+      "minimum": 0,
+      "maximum": 1,
+      "step": 0.05
+    },
+    {
+      "id": "spotlight-menu",
+      "component": "spotlight",
+      "domain": "com.apple.Spotlight",
+      "key": "MenuItemHidden",
+      "label": "Hide Spotlight menu icon",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "spotlight-suggestions",
+      "component": "spotlight",
+      "domain": "com.apple.lookup.shared",
+      "key": "LookupSuggestionsDisabled",
+      "label": "Disable lookup suggestions",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "terminal-secure",
+      "component": "terminal",
+      "domain": "com.apple.Terminal",
+      "key": "SecureKeyboardEntry",
+      "label": "Secure keyboard entry",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "terminal-focus",
+      "component": "terminal",
+      "domain": "com.apple.Terminal",
+      "key": "FocusFollowsMouse",
+      "label": "Focus follows mouse",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "terminal-line-marks",
+      "component": "terminal",
+      "domain": "com.apple.Terminal",
+      "key": "ShowLineMarks",
+      "label": "Show line marks",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Reopen the affected app or sign out normally if needed.",
+      "choice": {
+        "mode": "keep"
+      }
+    },
+    {
+      "id": "gestures-minimize",
+      "component": "gestures",
+      "domain": "org.macossetup.gestures",
+      "key": "minimizeEnabled",
+      "label": "Click active Dock app to minimize",
+      "type": "boolean",
+      "minOS": "27.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "gestures-alt-tab",
+      "component": "gestures",
+      "domain": "org.macossetup.gestures",
+      "key": "altTabEnabled",
+      "label": "Alt+Tab switches apps",
+      "type": "boolean",
+      "minOS": "27.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "gestures-launcher",
+      "component": "gestures",
+      "domain": "org.macossetup.gestures",
+      "key": "launcherEnabled",
+      "label": "Windows key opens Apps launcher",
+      "type": "boolean",
+      "minOS": "27.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "gestures-clear-search",
+      "component": "gestures",
+      "domain": "org.macossetup.gestures",
+      "key": "clearSearchEnabled",
+      "label": "Clear Apps search when reopening",
+      "type": "boolean",
+      "minOS": "27.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "gestures-login",
+      "component": "gestures",
+      "domain": "org.macossetup.gestures",
+      "key": "startAtLogin",
+      "label": "Run DockMinimizer at login",
+      "type": "boolean",
+      "minOS": "27.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "closing-red",
+      "component": "closing",
+      "domain": "org.macossetup.closing",
+      "key": "enabled",
+      "label": "Red button quits app",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "closing-edge",
+      "component": "closing",
+      "domain": "org.macossetup.closing",
+      "key": "edgeQuitEnabled",
+      "label": "Quit Edge after its last tab",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "closing-terminal",
+      "component": "closing",
+      "domain": "org.macossetup.closing",
+      "key": "terminalQuitEnabled",
+      "label": "Quit Terminal after its last tab",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "closing-login",
+      "component": "closing",
+      "domain": "org.macossetup.closing",
+      "key": "startAtLogin",
+      "label": "Run QuitOnRed at login",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "windowskeys-mapping",
+      "component": "windowskeys",
+      "domain": "org.macossetup.windowskeys",
+      "key": "enabled",
+      "label": "Ctrl \u2192 Command; Windows \u2192 Control",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "windowskeys-login",
+      "component": "windowskeys",
+      "domain": "org.macossetup.windowskeys",
+      "key": "startAtLogin",
+      "label": "Apply keyboard mapping at login",
+      "type": "boolean",
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "Start the selected helper after applying. Accessibility may need approval.",
+      "choice": {
+        "mode": "set",
+        "value": true
+      }
+    },
+    {
+      "id": "screensaver-idle",
+      "component": "screensaver",
+      "domain": "com.apple.screensaver",
+      "key": "idleTime",
+      "scope": "current-user-current-host",
+      "label": "Screen saver delay (seconds)",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10800,
+      "step": 60,
+      "minOS": "13.0",
+      "maxOS": "28.0",
+      "refresh": "0 means Never. Saved for this Mac; administrator policies may control this option.",
+      "choice": {
+        "mode": "keep"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+finder
+dock
+keyboard
+screenshots
+appearance
+accessibility
+mouse
+trackpad
+windows
+desktop
+sound
+spotlight

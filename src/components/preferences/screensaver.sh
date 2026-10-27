@@ -1,0 +1,1 @@
+component_inspect() { preferences_inspect screensaver; printf 'GUIDED [screensaver] Preferences → Screen saver opens visual choices and Lock Screen timing controls. Verify visuals in System Settings.\n'; }
