@@ -42,7 +42,9 @@ with tempfile.TemporaryDirectory(prefix='mac-tweak-terminal-native-') as directo
      os.write(master,b'\x03');assert p.wait(timeout=20)==130,(p.returncode,p.output)
      assert not apps() and not list(root.glob('lifecycle-*.json')) and not control.exists() and b'Native UI checks require' not in p.output
      print('PASS: '+launcher+' Ctrl+C during preparation skips native launch and cleans its channel',flush=True);continue
-    report=wait(p,master,lambda:report_for(mode));assert report['path'].startswith(str(root)+'/'),report
+    # A new fixture builds/signs its native host before publishing readiness.
+    # Keep shutdown deadlines separate from this cold-start allowance.
+    report=wait(p,master,lambda:report_for(mode),timeout=30,description='native app startup');assert report['path'].startswith(str(root)+'/'),report
     if mode=='reused':
      other,other_master=start_terminal(command,env);processes.append((other,other_master));other_control=wait(other,other_master,lambda:channel(other.pid));channels.append(other_control)
      wait(other,other_master,lambda:(root/('reopened-'+str(report['pid'])+'.json')).exists())

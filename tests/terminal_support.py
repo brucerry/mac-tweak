@@ -26,14 +26,14 @@ def drain(master):
    if error.errno==errno.EIO:break
    raise
  return data
-def wait(p,master,predicate):
- limit=time.monotonic()+8;output=b''
+def wait(p,master,predicate,timeout=8,description='terminal signal'):
+ limit=time.monotonic()+timeout;output=b''
  while time.monotonic()<limit:
   output+=drain(master);value=predicate()
   if value:return value
   if p.poll() is not None:raise AssertionError(('worker exited early',p.returncode,output.decode(errors='replace')))
   time.sleep(.02)
- raise AssertionError(('terminal signal timed out',output.decode(errors='replace')))
+ raise AssertionError((description+' timed out',output.decode(errors='replace')))
 
 def start_terminal(arguments,environment=None):
  pid,master=pty.fork()
