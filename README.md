@@ -107,6 +107,28 @@ Open installed helpers from `~/Applications` or enable their login option in Pre
 
 ---
 
+## 🏗️ Build
+
+Build on macOS with **Python 3** and **Apple Command Line Tools** (`xcode-select --install`). Run these commands from the repository root:
+
+```sh
+python3 scripts/release/build.py
+python3 scripts/release/verify.py dist
+```
+
+The build creates a universal app for Apple Silicon and Intel. The verification command checks the generated packages, signatures, checksums, and bundled source.
+
+| Output in `dist/` | Contents |
+| --- | --- |
+| `*.zip` | Portable **Mac Tweak.app**. |
+| `*.pkg` | Installer for **Mac Tweak.app** in `/Applications`. |
+| `*.sha256` | Checksums for the ZIP, installer, and manifest. |
+| `*.manifest.json` | Version, architectures, signing status, and source commit. |
+
+The app is ad-hoc signed; the installer is unsigned, and the packages are not notarized. See [release preparation](docs/releases.md) for CI and release workflows.
+
+---
+
 ## 📚 Documentation
 
 | Topic | Details |
