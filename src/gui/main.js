@@ -1,6 +1,8 @@
 /* Native macOS chooser. JXA/AppKit ship with macOS; no extra runtime is needed. */
 ObjC.import('Cocoa');
 
+// AppKit's BOOL is encoded as char on Intel and bool on Apple Silicon.
+var NativeBOOL = $.NSView.instanceMethodSignatureForSelector('isFlipped').methodReturnType === 'c' ? 'char' : 'bool';
 var UI = null;
 var State = null;
 var Dialogs = null;
@@ -804,7 +806,7 @@ function guarded(action) {
 
 ObjC.registerSubclass({
     name: 'MacTweakFlippedView', superclass: 'NSView',
-    methods: { isFlipped: { types: ['bool', []], implementation: function () { return true; } } }
+    methods: { isFlipped: { types: [NativeBOOL, []], implementation: function () { return true; } } }
 });
 ObjC.registerSubclass({
     // Delegate selectors below supply their Objective-C signatures explicitly.
@@ -877,9 +879,9 @@ ObjC.registerSubclass({
         }},
         'finishQuit:': {types:['void',['id']],implementation:function(){finishMacTweakQuit();}},
         'hostModalReady:': {types:['void',['id']],implementation:function(){guarded(function(){var context=UI.hostContext,pid=UI.hostPID,path=context.fixture+'/lifecycle-'+pid+'.json',report=MaintenanceIO.json(path);report.modal=true;MaintenanceIO.write(path,report);});}},
-        'windowShouldClose:': { types: ['bool', ['id']], implementation: function () { return !busyClosing(); } },
+        'windowShouldClose:': { types: [NativeBOOL, ['id']], implementation: function () { return !busyClosing(); } },
         'windowWillClose:': { types: ['void', ['id']], implementation: function () { requestMacTweakQuit(); } },
-        'applicationShouldHandleReopen:hasVisibleWindows:': {types:['bool',['id','bool']],implementation:function(){restoreMacTweakWindow();return false;}},
+        'applicationShouldHandleReopen:hasVisibleWindows:': {types:[NativeBOOL,['id',NativeBOOL]],implementation:function(){restoreMacTweakWindow();return false;}},
         'applicationShouldTerminate:': { types: ['unsigned long', ['id']], implementation: function () {
             if (busyClosing()) return 0;
             cleanup();

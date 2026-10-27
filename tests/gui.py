@@ -14,6 +14,24 @@ command = ["/bin/bash", str(repo / "tweak.sh"), "gui"]
 model = subprocess.run([*command, "--self-test"], capture_output=True, text=True, timeout=20)
 assert model.returncode == 0 and "PASS: native GUI" in model.stdout, model.stdout + model.stderr
 print(model.stdout.strip(), flush=True)
+abi_probe = r'''
+ObjC.import('Cocoa');
+function run(argv) {
+    var source = $.NSString.stringWithContentsOfFileEncodingError(argv[0] + '/src/gui/main.js', $.NSUTF8StringEncoding, Ref());
+    (0, eval)(ObjC.unwrap(source));
+    var expected = $.NSView.instanceMethodSignatureForSelector('isFlipped').methodReturnType;
+    var flipped = $.MacTweakFlippedView.instanceMethodSignatureForSelector('isFlipped');
+    var close = $.MacTweakController.instanceMethodSignatureForSelector('windowShouldClose:');
+    var reopen = $.MacTweakController.instanceMethodSignatureForSelector('applicationShouldHandleReopen:hasVisibleWindows:');
+    if (['B', 'c'].indexOf(expected) < 0 || flipped.methodReturnType !== expected ||
+        close.methodReturnType !== expected || reopen.methodReturnType !== expected ||
+        reopen.getArgumentTypeAtIndex(3) !== expected) throw new Error('Native BOOL signatures must match AppKit for this architecture.');
+    return 'PASS: native BOOL return and argument encodings match AppKit (' + expected + ')';
+}
+'''
+abi = subprocess.run(['/usr/bin/osascript', '-l', 'JavaScript', '-e', abi_probe, str(repo)], capture_output=True, text=True, timeout=20)
+assert abi.returncode == 0 and 'PASS: native BOOL' in abi.stdout, abi.stdout + abi.stderr
+print(abi.stdout.strip(), flush=True)
 if "--native" in sys.argv:
     modes = ["--smoke", "--smoke-apply", "--smoke-blocked", "--smoke-stale", "--smoke-interaction",
              "--smoke-apply-failure", "--smoke-verify-pending", "--smoke-verify-versions", "--smoke-verify-reused", "--smoke-verify-health",
