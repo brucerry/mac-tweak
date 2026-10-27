@@ -49,6 +49,23 @@ jobs:
         run: |
           test "$(uname -m)" = '${{ matrix.arch }}'
           printf 'Native host: macOS %s, %s\n' "$(sw_vers -productVersion)" "$(uname -m)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the hosted desktop awake for native checks
+        run: |
+          test "$GITHUB_ACTIONS" = true
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          /usr/bin/osascript -l JavaScript -e '
+            ObjC.import("Foundation");
+            function run(argv) {
+              var source = $.NSString.stringWithContentsOfFileEncodingError(argv[0] + "/src/gui/presentation.js", $.NSUTF8StringEncoding, Ref());
+              var policy = (0, eval)(ObjC.unwrap(source));
+              policy.testDesktop();
+              return "PASS: hosted desktop is safe before the idle assertion";
+            }
+          ' "$GITHUB_WORKSPACE"
+          /usr/bin/caffeinate -diu -t 2700 >/dev/null 2>&1 </dev/null &
+          ci_awake_pid=$!
+          kill -0 "$ci_awake_pid"
+          printf 'MAC_TWEAK_CI_AWAKE_PID=%s\n' "$ci_awake_pid" >> "$GITHUB_ENV"
       - name: Native GUI startup
         run: python3 tests/gui.py
       - name: Syntax and isolated behavior checks
@@ -69,6 +86,13 @@ jobs:
       - name: Record live coverage
         if: github.event_name == 'workflow_dispatch' && inputs.live_smoke && success()
         run: echo 'Pinned upstream live installation, native tig build, verification, and repeat-run checks passed on this host.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Release the hosted desktop idle assertion
+        if: always() && env.MAC_TWEAK_CI_AWAKE_PID != ''
+        run: |
+          ci_awake_command=$(/bin/ps -p "$MAC_TWEAK_CI_AWAKE_PID" -o comm= || true)
+          if test "$ci_awake_command" = /usr/bin/caffeinate; then
+            kill "$MAC_TWEAK_CI_AWAKE_PID" 2>/dev/null || true
+          fi
 
   package-validation:
     name: Universal package / ${{ matrix.arch }}
