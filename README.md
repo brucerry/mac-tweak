@@ -1,6 +1,10 @@
 # Mac Tweak
 
-[![CI](https://github.com/brucerry/mac-tweak/actions/workflows/validate.yml/badge.svg)](https://github.com/brucerry/mac-tweak/actions/workflows/validate.yml)
+[![Validation](https://github.com/brucerry/mac-tweak/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/brucerry/mac-tweak/actions/workflows/validate.yml)
+
+[![Release](https://github.com/brucerry/mac-tweak/actions/workflows/release.yml/badge.svg)](https://github.com/brucerry/mac-tweak/actions/workflows/release.yml)
+
+[![macOS 13+](https://img.shields.io/badge/macOS-13%2B-black?logo=apple)](#requirements)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -8,13 +12,15 @@ Choose individual tweaks or adopt the full setup through a native macOS app.
 
 ---
 
-## 📋 Requirements
+## Requirements
 
 macOS 13+ on Apple Silicon or Intel; Node.js requires macOS 13.5+. Command Line Tools are needed for tig and native helpers. Dock/launcher gestures target macOS 27. The app explains prerequisites for each selection.
 
 ---
 
-## 💻 Terminal
+## Tweaks
+
+### Terminal
 
 | Item | Description |
 | --- | --- |
@@ -22,14 +28,14 @@ macOS 13+ on Apple Silicon or Intel; Node.js requires macOS 13.5+. Command Line 
 | **Shell shortcuts** | Add convenient aliases for listing files. |
 | **File colors** | Color file types in macOS `ls` output. |
 
-## 🪟 Terminal app
+### Terminal app
 
 | Item | Description |
 | --- | --- |
 | **Terminal preferences** | Adjust Terminal app options. |
 | **Terminal profiles** | Install portable Dark and Light profiles with font, color, and shell-exit window behavior. |
 
-## 🛠️ Development
+### Development
 
 | Item | Description |
 | --- | --- |
@@ -38,7 +44,7 @@ macOS 13+ on Apple Silicon or Intel; Node.js requires macOS 13.5+. Command Line 
 | **GitHub CLI** | Work with GitHub from your terminal. |
 | **tig** | Browse Git history through an interactive terminal interface. |
 
-## ⚙️  System
+### System
 
 | Item | Description |
 | --- | --- |
@@ -55,7 +61,7 @@ macOS 13+ on Apple Silicon or Intel; Node.js requires macOS 13.5+. Command Line 
 | **Sound** | Adjust sound effects and alerts. |
 | **Spotlight** | Configure search options and open native search settings. |
 
-## 🖱️ Behavior
+### Behavior
 
 | Item | Description |
 | --- | --- |
@@ -63,7 +69,7 @@ macOS 13+ on Apple Silicon or Intel; Node.js requires macOS 13.5+. Command Line 
 | **Dock & gestures** | Minimize through Dock clicks, use Alt+Tab, and open the Apps launcher with the Windows-logo key when keyboard mapping is enabled. |
 | **App close behavior** | Quit apps with the red button and quit Edge or Terminal after their final window closes. |
 
-## 🖥️ Display & power
+### Display & power
 
 | Item | Description |
 | --- | --- |
@@ -75,13 +81,15 @@ macOS 13+ on Apple Silicon or Intel; Node.js requires macOS 13.5+. Command Line 
 
 ---
 
-## 🚀 Open
+## Usage
+
+### Open
 
 Download or clone this repository, then double-click **[Tweak.command](Tweak.command)** or run `./tweak.sh`. No extra runtime is needed to open the app. **Ctrl+C** in the launching terminal requests a normal quit while protecting active Apply work.
 
 Click cards to choose components, then **Review** the changes or **Verify** existing settings. **Apply** performs the reviewed changes and verifies automatically. **Later** keeps the review ready, and **Details** shows readable, color-coded activity. When no changes are needed, Apply stays disabled and the app explains why.
 
-## 🎨 Customize
+### Customize
 
 | Control | Description |
 | --- | --- |
@@ -92,7 +100,7 @@ Click cards to choose components, then **Review** the changes or **Verify** exis
 
 Changed files and preference originals are saved for recovery. Compatible installed tools are reused. Appearance starts at Keep current. Visual, security, and hardware choices use native macOS pages; saved preferences may need a normal relaunch or sign-out to become visible.
 
-## 🗂️ Saved files and utilities
+### Utilities
 
 | Utility | Description |
 | --- | --- |
@@ -107,7 +115,7 @@ Open installed helpers from `~/Applications` or enable their login option in Pre
 
 ---
 
-## 🏗️ Build
+## Build
 
 Build on macOS with **Python 3** and **Apple Command Line Tools** (`xcode-select --install`). Run these commands from the repository root:
 
@@ -129,7 +137,7 @@ The app is ad-hoc signed; the installer is unsigned, and the packages are not no
 
 ---
 
-## 📚 Documentation
+## Docs
 
 | Topic | Details |
 | --- | --- |

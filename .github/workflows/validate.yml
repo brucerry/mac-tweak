@@ -1,4 +1,4 @@
-name: Validate Mac Tweak
+name: Validation
 
 on:
   workflow_call:
