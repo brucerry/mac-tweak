@@ -1,12 +1,8 @@
-# Mac Tweak
+<h1 align="center">Mac Tweak</h1>
 
-[![Validation](https://github.com/brucerry/mac-tweak/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/brucerry/mac-tweak/actions/workflows/validate.yml)
-
-[![Release](https://github.com/brucerry/mac-tweak/actions/workflows/release.yml/badge.svg)](https://github.com/brucerry/mac-tweak/actions/workflows/release.yml)
-
-[![macOS 13+](https://img.shields.io/badge/macOS-13%2B-black?logo=apple)](#requirements)
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+<p align="center">
+  <a href="https://github.com/brucerry/mac-tweak/actions/workflows/validate.yml"><img src="https://github.com/brucerry/mac-tweak/actions/workflows/validate.yml/badge.svg?branch=main" alt="Validation"></a>&nbsp;<a href="https://github.com/brucerry/mac-tweak/actions/workflows/release.yml"><img src="https://github.com/brucerry/mac-tweak/actions/workflows/release.yml/badge.svg" alt="Release"></a>&nbsp;<a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+</p>
 
 Choose individual tweaks or adopt the full setup through a native macOS app.
 
