@@ -11,6 +11,7 @@ for snippet in "$CI_REPO"/src/terminal/*.zsh; do /bin/zsh -n "$snippet"; done
 /usr/bin/osascript -l JavaScript "$CI_REPO/tests/gui-enhancements.js" "$CI_REPO"
 python3 "$CI_REPO/tests/rename.py"
 python3 "$CI_REPO/tests/release-notes.py"
+python3 "$CI_REPO/tests/release-ci.py"
 python3 "$CI_REPO/tests/helper-launch.py"
 python3 "$CI_REPO/tests/display-settings.py"
 

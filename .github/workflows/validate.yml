@@ -8,6 +8,7 @@ on:
         required: false
         default: ''
   push:
+    branches: ['**']
   pull_request:
   workflow_dispatch:
     inputs:
@@ -72,7 +73,11 @@ jobs:
                     savers: (state.running || []).filter(function (id) { return /^com\.apple\.screensaver/i.test(id); }),
                     screenLevel: state.screenLevel, highWindows: (state.windows || []).filter(function (window) {
                       return Number(window.kCGWindowLayer) >= state.screenLevel && Number(window.kCGWindowAlpha) > 0.01;
-                    }).slice(0, 10).map(function (window) { return {layer: window.kCGWindowLayer, bounds: window.kCGWindowBounds}; })};
+                    }).slice(0, 10).map(function (window) {
+                      return {layer: window.kCGWindowLayer, bounds: window.kCGWindowBounds,
+                        owner: window.kCGWindowOwnerName, pid: window.kCGWindowOwnerPID,
+                        systemWindow: ["Window Server", "loginwindow"].indexOf(window.kCGWindowOwnerName) >= 0 ? window.kCGWindowName : undefined};
+                    })};
                 } catch (error) { last = {metadataError: String(error)}; }
                 if (!reported) { console.log("Waiting for hosted desktop readiness: " + JSON.stringify(last)); reported = true; }
                 $.NSRunLoop.currentRunLoop.runUntilDate($.NSDate.dateWithTimeIntervalSinceNow(1));
