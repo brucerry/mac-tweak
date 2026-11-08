@@ -139,4 +139,4 @@ The app is ad-hoc signed; the installer is unsigned, and the packages are not no
 | --- | --- |
 | Help | [Troubleshooting](docs/troubleshooting.md) and [recovery](docs/recovery.md). |
 | Development | [Advanced usage](docs/cli.md), [source organization](docs/architecture.md), and [validation](docs/validation.md). |
-| Releases | [Release preparation](docs/releases.md): packages, CI, and version **0.1.0**. Existing installations retain their original storage paths. |
+| Releases | [Release preparation](docs/releases.md): packages, CI, and version **0.1.1**. Existing installations retain their original storage paths. |

@@ -1,11 +1,11 @@
 # Release preparation
 
-The product version and bundle identity live in `src/app/metadata.json`. Version 0.1.0 release text is in `docs/releases/v0.1.0.md`; generated notes append real commit links using the Description / Changes / Commits layout from [the reference releases](https://github.com/brucerry/mark-six-studio/releases).
+The product version and bundle identity live in `src/app/metadata.json`. Version 0.1.1 release text is in `docs/releases/v0.1.1.md`; generated notes append real commit links using the Description / Changes / Commits layout from [the reference releases](https://github.com/brucerry/mark-six-studio/releases).
 
 Run `python3 scripts/release/build.py`, then `python3 scripts/release/verify.py dist` to prepare and check:
 
-- `MacTweak-0.1.0-macos-universal-unsigned.zip` containing **Mac Tweak.app**.
-- `MacTweak-0.1.0-macos-universal-unsigned.pkg` targeting `/Applications`.
+- `MacTweak-0.1.1-macos-universal-unsigned.zip` containing **Mac Tweak.app**.
+- `MacTweak-0.1.1-macos-universal-unsigned.pkg` targeting `/Applications`.
 - A SHA-256 file and JSON manifest with version, architectures, signing status and source commit/dirty state.
 
 The launcher contains Apple Silicon and Intel slices, bundles all chooser/helper source and licenses, and uses macOS's JXA runtime. No runtime package manager is needed to open it. Applying individual components can require their documented prerequisites. Local preparation never runs an installer, starts helpers, changes preferences or publishes a release.
