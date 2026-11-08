@@ -6,9 +6,13 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Existing version tag to prepare as a draft (for example v0.1.0)
+        description: Existing validated version tag to release (for example v0.1.1)
         type: string
         required: true
+      draft:
+        description: Keep the release as an unpublished draft
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -63,10 +67,17 @@ jobs:
           name: MacTweak-${{ github.event.inputs.tag || github.ref_name }}-macos
           path: dist/MacTweak-*
           if-no-files-found: error
-      - name: Create an unpublished draft
+      - name: Publish the verified release
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          RELEASE_DRAFT: ${{ github.event_name == 'workflow_dispatch' && inputs.draft || false }}
         run: |
-          gh release create "$RELEASE_TAG" dist/MacTweak-* --verify-tag --draft --title "$RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md"
-          echo 'Validated universal macOS artifacts uploaded to an unpublished draft. Review the draft before publishing.' >> "$GITHUB_STEP_SUMMARY"
+          release_options=(--verify-tag --title "$RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md")
+          if test "$RELEASE_DRAFT" = true; then release_options+=(--draft); fi
+          gh release create "$RELEASE_TAG" dist/MacTweak-* "${release_options[@]}"
+          if test "$RELEASE_DRAFT" = true; then
+            echo 'Verified universal macOS artifacts uploaded to the explicitly requested draft.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Published the verified universal macOS release after all required checks passed.' >> "$GITHUB_STEP_SUMMARY"
+          fi
