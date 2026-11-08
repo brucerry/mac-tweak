@@ -13,8 +13,15 @@ private func elementAttribute(_ element: AXUIElement, _ name: String) -> AXUIEle
 }
 
 private struct CloseTarget {
-    let button: AXUIElement
+    let button: AXUIElement?
     let app: NSRunningApplication
+    var steamWindow: CGWindowID? = nil
+
+    func matches(_ other: CloseTarget) -> Bool {
+        guard app.processIdentifier == other.app.processIdentifier else { return false }
+        if let button, let otherButton = other.button { return CFEqual(button, otherButton) }
+        return steamWindow != nil && steamWindow == other.steamWindow
+    }
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
@@ -171,6 +178,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         var hit: AXUIElement?
         guard AXUIElementCopyElementAtPosition(systemWide, Float(point.x), Float(point.y), &hit) == .success,
               var element = hit else { return nil }
+        var hitPID: pid_t = 0
+        if AXUIElementGetPid(element, &hitPID) == .success,
+           let steam = SteamCloseButton.target(at: point, hitPID: hitPID) {
+            return CloseTarget(button: nil, app: steam.app, steamWindow: steam.window)
+        }
         // The window's AXCloseButton must match, so document/tab close controls are unaffected.
         for _ in 0..<4 {
             if let subrole = attribute(element, kAXSubroleAttribute) as? String,
@@ -203,13 +215,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             pending = nil
             if enabled, !event.flags.contains(.maskShift),
                let released = target(at: event.location),
-               released.app.processIdentifier == pressed.app.processIdentifier,
-               CFEqual(released.button, pressed.button) {
+               released.matches(pressed) {
                 // Defer until the click event has been swallowed. This is normal Quit, never Force Quit.
                 DispatchQueue.main.async { [weak self] in
                     guard let self, self.interaction.allowsAction(fresh: true), WindowActionPolicy.allows(pressed.app) else { return }
                     let sent = pressed.app.terminate()
                     self.lastItem.title = "\(sent ? "Quit requested" : "Could not request quit"): \(pressed.app.localizedName ?? "App")"
+                    print(self.lastItem.title); fflush(stdout)
                 }
             }
             return nil
@@ -330,8 +342,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc private func quitHelper() { NSApp.terminate(nil) }
 }
 
+if CommandLine.arguments.contains("--audit-close-buttons") {
+    exit(CloseButtonAudit.run())
+}
 if CommandLine.arguments.contains("--self-test") {
     WindowActionPolicy.selfTest()
+    SteamCloseButton.selfTest()
     // No application, input hook, permission prompt, or quit request is created.
     precondition(!Set(["com.apple.finder", "com.apple.dock"]).contains("com.microsoft.edgemac"))
     print("PASS: QuitOnRed builds with separate red-click, Edge, and Terminal choices")
