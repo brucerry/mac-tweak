@@ -11,7 +11,7 @@ from urllib.parse import urlencode
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 WORKFLOW = '.github/workflows/validate.yml'
 REQUIRED_JOBS = {
-    'macOS 15 / arm64', 'macOS 15 / x86_64',
+    'macOS 26 / arm64', 'macOS 15 / x86_64',
     'Universal package / arm64', 'Universal package / x86_64',
 }
 
