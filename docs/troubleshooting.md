@@ -10,7 +10,8 @@ selected changes. After resolving it, run a fresh plan and review it again.
 | Symlink conflict | The reported file or parent belongs to another configuration layout. Keep using that layout, or move the affected target to a regular user-owned location yourself. Setup never follows the link to edit its destination. |
 | Unmanaged or edited configuration/integration block | A reviewed repair can back up and restore selected regular snippets or a well-formed setup integration block. Normal text outside the block is preserved. Redirected targets or ambiguous markers require manual resolution. |
 | Malformed or duplicate markers | Inspect the reported startup file and reconcile its mac-tweak blocks. Keep one intact recorded block or remove the setup block yourself, then review the next plan. |
-| Missing Command Line Tools | Run `xcode-select --install` yourself and finish Apple's installation. Setup never starts this privileged prerequisite installation. Select components without tig if you do not want the build tools. |
+| Missing Command Line Tools | Choose Install in Mac Tweak. It opens Apple’s installer after approval, checks the required tools, and reviews your selected setup again. Finish any Apple license or administrator approval. Later postpones installation; Stop waiting ends the check. |
+| Command Line Tools installation could not start or finish | The app shows the installer’s error and keeps Apply unavailable. Check your network and any Apple approval, then choose Review to retry. If Apple reports that the tools are already installed but its compiler or SDK is broken, repair the selected developer tools through Apple; the app preserves existing toolchains. |
 | Unsupported host | The runner supports macOS 13+ on native Apple Silicon and Intel. Individual releases can have stricter requirements; the Node release requires macOS 13.5+. Use a supported host or exclude the incompatible component. |
 | Not writable | Inspect ownership and permissions of the named target or parent. Run setup as your normal user with a writable home directory. |
 | Managed policy or host-specific override | Resolve the selected setting through System Settings or the administrator managing the Mac. The fix dialog cannot bypass policy or remove a profile. Keep current can leave that setting alone. |
@@ -36,9 +37,10 @@ Review and apply the selected setup to finish adoption. Overall verification
 remains nonzero until every required change is applied. For outdated external
 tools, the popup can recommend a managed replacement that keeps their original
 payloads and saves displaced command entries. Cancel makes no setup changes;
-Details retains the plan for inspection before acceptance. System prerequisites,
-unsupported hosts, symlinked targets, and ambiguous markers receive manual steps
-without an automatic-apply button.
+Details retains the plan for inspection before acceptance. Missing Apple Command
+Line Tools have a separate installation approval. Unsupported hosts, symlinked
+targets, ambiguous markers, and protected system policies still require resolving
+the specific issue; they cannot be fixed by installing software.
 
 
 ## Closing an app opened from Terminal

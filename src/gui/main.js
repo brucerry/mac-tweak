@@ -12,7 +12,7 @@ var FilesBrowser = null;
 var MaintenanceSheet = null;
 var MaintenanceIO = null;
 var Project = null;
-var Icons=null, Hovers=null, Activity=null, ActivityLog=null, NativeFiles=null, Presentation=null, SettingsNavigation=null;
+var Icons=null, Hovers=null, Activity=null, ActivityLog=null, NativeFiles=null, Presentation=null, SettingsNavigation=null, Prerequisites=null;
 var TITLES = {
     gestures: 'Dock & gestures', closing: 'App close behavior', windowskeys: 'Windows keyboard', terminalprofile: 'Terminal profiles',
     node: 'Node.js & npm', uv: 'uv', gh: 'GitHub CLI', tig: 'tig',
@@ -353,7 +353,8 @@ function controls(appearanceOnly) {
     var applying = UI.job && UI.job.kind === 'apply' && UI.job.task.running;
     var waiting = UI.job && ['review', 'repair-review'].indexOf(UI.job.kind) >= 0 && UI.job.task.running && !UI.job.ready;
     var checking = UI.job && UI.job.kind === 'verify' && UI.job.task.running;
-    var busy = applying || waiting || checking, selected = UI.model.ids().length;
+    var installing = UI.prerequisite && ['requesting', 'checking'].indexOf(UI.prerequisite.session.phase) >= 0;
+    var busy = applying || waiting || checking || installing, selected = UI.model.ids().length;
     UI.checkboxes.forEach(function (button, index) {
         var allowed = UI.model.allowed(UI.model.parts[index].id), accent = UI.theme[UI.accentKeys[index]];
         if(!appearanceOnly)button.enabled = !busy;
@@ -379,6 +380,9 @@ function controls(appearanceOnly) {
     if(!appearanceOnly){
         UI.utilities.enabled = !busy;UI.savedFiles.enabled = !busy;
         UI.review.enabled = selected > 0 && !busy;UI.verify.enabled = selected > 0 && !busy;
+        UI.review.title = UI.prerequisite ? 'Check again' : 'Review';
+        UI.stopPrerequisite.hidden = !UI.prerequisite;
+        var footerFrame = UI.status.frame;footerFrame.size.width = UI.prerequisite ? 972 : 1090;UI.status.frame = footerFrame;
         UI.preferencesButton.enabled = !busy && UI.model.parts.some(function (part) { return (part.kind === 'preference'||part.kind==='guided') && UI.model.chosen[part.id]; });
         UI.apply.enabled = !busy && UI.model.matchesReview(UI.job) && UI.job.task.running && UI.job.changes > 0;
         UI.apply.title = 'Apply';
@@ -387,10 +391,11 @@ function controls(appearanceOnly) {
     UI.apply.contentTintColor = UI.apply.enabled ? $.NSColor.whiteColor : UI.theme.muted.colorWithAlphaComponent(0.5);
     UI.reviewPlate.fillColor = UI.review.enabled && !UI.apply.enabled ? UI.theme.accent.colorWithAlphaComponent(0.10) : UI.theme.surface;
     UI.review.contentTintColor = UI.review.enabled ? UI.theme.accent : UI.theme.muted.colorWithAlphaComponent(0.5);
-    if(!appearanceOnly){UI.apply.keyEquivalent = UI.apply.enabled ? '\r' : '';UI.review.keyEquivalent = !UI.apply.enabled && UI.review.enabled ? '\r' : '';UI.selectionTitle.stringValue = selected ? selected + ' selected' : 'Nothing selected';if (busy) UI.spinner.startAnimation(null); else UI.spinner.stopAnimation(null);}
+    if(!appearanceOnly){UI.apply.keyEquivalent = UI.apply.enabled ? '\r' : '';UI.review.keyEquivalent = !UI.apply.enabled && UI.review.enabled ? '\r' : '';UI.selectionTitle.stringValue = selected ? selected + ' selected' : 'Nothing selected';if (busy || UI.prerequisite) UI.spinner.startAnimation(null); else UI.spinner.stopAnimation(null);}
     renderResults(appearanceOnly);
 }
 function cancelReview() {
+    cancelPrerequisite();
     if (!UI.job || (UI.job.kind === 'apply' && UI.job.task.running)) return;
     try { UI.job.input.closeFile; } catch (_) {}
     UI.retired.push(UI.job);
@@ -647,9 +652,57 @@ function applyJob(acceptedFixes) {
 }
 function manualRecommendations(output) {
     var blockers = output.split('\n').filter(function (line) { return line.indexOf('BLOCKED:') === 0; }).map(friendlyBlocker);
-    if (output.indexOf('tig needs Apple Command Line Tools') >= 0) blockers.push('Install Apple Command Line Tools with xcode-select --install and finish Apple’s installer.');
     if (output.indexOf('Symlink conflict:') >= 0) blockers.push('Resolve the named symlink through your existing configuration manager; its destination will be preserved.');
     return blockers.length ? blockers : ['Inspect Details for the requirement that prevented this selection.'];
+}
+function cancelPrerequisite() {
+    if (!UI.prerequisite) return;
+    UI.prerequisite.session.cancel(UI.prerequisite.adapter); UI.prerequisite = null;
+}
+function stopPrerequisite() {
+    cancelPrerequisite();
+    UI.summary = 'Installation checking stopped.\n\nApple’s installer can continue independently. Choose Review when it finishes.';
+    status('Choose Review when Apple’s installer finishes.', 'warning'); controls(); renderOutput();
+}
+function reviewOrCheck() {
+    if (UI.prerequisite) { UI.prerequisite.session.nextCheck = 0; pollPrerequisite(); }
+    else startJob('review');
+}
+function offerPrerequisite(job) {
+    var requirement = Prerequisites.plan(UI.output, UI.model.ids());
+    if (!requirement) return false;
+    job.offerHandled = true;
+    var session = new Prerequisites.Session(requirement, job.key);
+    var response = runAlert(Dialogs.prerequisite(requirement.components.map(function (id) { return TITLES[id] || id; })));
+    if (UI.job !== job || UI.model.reviewKey() !== job.key) return true;
+    var adapter = Prerequisites.nativeAdapter(UI.root, UI.transport);
+    var started = session.approve(response === 1000, UI.model.reviewKey(), Date.now(), adapter);
+    if (started) {
+        UI.prerequisite = { session: session, adapter: adapter };
+        UI.summary = 'Installing Apple Command Line Tools\n\nApprove Apple’s installer and its license if asked. Mac Tweak will check completion and review your selection again.';
+        status('Opening Apple’s installer…', 'busy');
+    } else {
+        UI.summary = session.phase === 'failed' ? 'Could not start installation.\n\n' + session.message : 'Apple Command Line Tools are needed.\n\nChoose Review when you want to install them.';
+        status(session.phase === 'failed' ? 'Installation could not start. Try Review again.' : 'Installation postponed. No changes applied.', 'warning');
+    }
+    controls(); renderOutput(); return true;
+}
+function pollPrerequisite() {
+    var state = UI.prerequisite;
+    if (!state) return;
+    var previous = state.session.phase;
+    state.session.tick(UI.model.reviewKey(), Date.now(), state.adapter);
+    if (state.session.phase === 'ready') {
+        UI.prerequisite = null; startJob('review'); return;
+    }
+    if (state.session.phase === 'failed' || state.session.phase === 'cancelled') {
+        UI.prerequisite = null;
+        UI.summary = 'Installation needs attention\n\n' + state.session.message + '\n\nChoose Review to try again. Apple’s installer may still be open.';
+        status('Installation has not been verified.', 'warning'); controls(); renderOutput(); return;
+    }
+    if (previous !== state.session.phase) {
+        status(state.session.phase === 'requesting' ? 'Opening Apple’s installer…' : 'Waiting for Apple’s installer. Stop waiting to return to setup.', 'busy'); controls();
+    }
 }
 function presentFixes(job, canApply) {
     if (UI.job !== job || UI.model.reviewKey() !== job.key) return;
@@ -694,6 +747,7 @@ function maybeRecommend(job, result) {
     if (job.repair && job.ready && job.changes === 0) { job.offerHandled = true; startJob('verify'); return; }
     if (job.ready && job.changes > 0) { presentFixes(job, true); return; }
     if (job.finished && result && (result.level === 'warning' || /^BLOCKED:/m.test(UI.output))) {
+        if (offerPrerequisite(job)) return;
         job.offerHandled = true;
         if (job.repair) presentFixes(job, false);
         else startJob('repair-review');
@@ -713,6 +767,7 @@ function poll() {
         UI.nativeEventsRegistered=true;
     }
     if(UI.smoke&&UI.smoke.indexOf('ux-')===0){uxTick();return;}
+    if (UI.prerequisite) { pollPrerequisite(); return; }
     UI.retired = UI.retired.filter(function (job) {
         if (job.task.running) return true;
         clearJob(job); return false;
@@ -762,6 +817,7 @@ function busyClosing() {
 function cleanup() {
     if(UI.cleaned)return;UI.cleaned=true;
     cancelSettingsNavigation();
+    cancelPrerequisite();
     if (UI.timer) UI.timer.invalidate;
     if(UI.hostTimer)UI.hostTimer.invalidate;
     if(UI.nativeRevealTimer)UI.nativeRevealTimer.invalidate;
@@ -829,7 +885,8 @@ ObjC.registerSubclass({
         'showAbout:': {types:['void',['id']],implementation:function(){guarded(showAbout);}},
         'closeInfo:': {types:['void',['id']],implementation:function(){$.NSApp.stopModalWithCode(1000);}},
         'openRepository:': { types: ['void', ['id']], implementation: function () { guarded(function () { $.NSWorkspace.sharedWorkspace.openURL($.NSURL.URLWithString('https://github.com/brucerry/mac-tweak')); }); } },
-        'review:': { types: ['void', ['id']], implementation: function () { guarded(function () { startJob('review'); }); } },
+        'review:': { types: ['void', ['id']], implementation: function () { guarded(reviewOrCheck); } },
+        'stopPrerequisite:': { types: ['void', ['id']], implementation: function () { guarded(stopPrerequisite); } },
         'apply:': { types: ['void', ['id']], implementation: function () { guarded(applyJob); } },
         'verify:': { types: ['void', ['id']], implementation: function () { guarded(function () { startJob('verify'); }); } },
         'details:': { types: ['void', ['id']], implementation: function () { guarded(renderOutput); } },
@@ -1053,6 +1110,7 @@ function buildWindow(root, smoke, hosted, applet) {
     content.addSubview(centeredLabel('Existing files are backed up.', 824, 79.5, 330, 11, false, true));
     UI.statusIcon = icon('circle', 20, 15, 18, UI.theme.muted); content.addSubview(UI.statusIcon);
     UI.status = centeredLabel('', 46, 24, 1090, 12, false, true); content.addSubview(UI.status);
+    UI.stopPrerequisite = actionButton('Stop waiting', 'stopPrerequisite:', 1040, 11, 140);UI.stopPrerequisite.hidden = true;content.addSubview(UI.stopPrerequisite);
     UI.spinner = $.NSProgressIndicator.alloc.initWithFrame($.NSMakeRect(20, 6, 1160, 4));
     UI.spinner.style = $.NSProgressIndicatorStyleBar;UI.spinner.indeterminate=true; UI.spinner.displayedWhenStopped = false; content.addSubview(UI.spinner);
     var menu = $.NSMenu.alloc.init, item = $.NSMenuItem.alloc.init, applicationMenu = $.NSMenu.alloc.init;
@@ -1708,6 +1766,7 @@ function run(argv) {
     ActivityLog=(0,eval)(readText(root+'/src/gui/activity-log.js'));
     State = (0, eval)(readText(root + '/src/gui/state.js'));
     Dialogs = (0, eval)(readText(root + '/src/gui/dialogs.js'));
+    Prerequisites = (0, eval)(readText(root + '/src/gui/prerequisites.js'));
     PreferenceModel = (0, eval)(readText(root + '/src/preferences/model.js'));
     PreferenceEditor = (0, eval)(readText(root + '/src/gui/preferences.js'));
     FilesBrowser = (0,eval)(readText(root+'/src/gui/files.js'));

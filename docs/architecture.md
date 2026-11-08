@@ -61,8 +61,19 @@ that plan and starts ordinary verification automatically. User-local command
 replacements are staged and checked before originals are preserved/replaced.
 Their paths, ownership, resolved payloads, and signatures are checked again after
 downloads and immediately before activation. Selected regular configuration can
-be backed up and restored; symlinked targets, ambiguous blocks, and system
-requirements receive manual guidance with no automatic-apply action.
+be backed up and restored; symlinked targets, ambiguous blocks, and protected
+system policies receive guidance with no automatic-apply action.
+
+Missing developer tools produce typed prerequisite records for tig or the
+selected native helpers. The GUI coalesces them into one Command Line Tools
+offer, bound to the current selection. Explicit Install consent starts only
+Apple’s fixed `xcode-select --install` request. The installer handles its own
+license and authentication. Short asynchronous readiness probes check the
+selected requirements before creating a fresh review; the old blocked plan
+cannot be applied. Later, Stop waiting, selection changes, timeouts and errors
+never approve tweaks. Stopping the watcher only stops its own request/probe,
+leaving Apple’s installer independent. Tests replace the installer adapter and
+also prohibit real installer requests when the GUI test flag is set.
 
 Normalize AppKit integer properties before comparing them with JavaScript
 numbers: JXA can expose 64-bit properties such as checkbox state and preset

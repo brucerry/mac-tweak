@@ -10,7 +10,7 @@ Choose individual tweaks or adopt the full setup through a native macOS app.
 
 ## Requirements
 
-macOS 13+ on Apple Silicon or Intel; Node.js requires macOS 13.5+. Command Line Tools are needed for tig and native helpers. Dock/launcher gestures target macOS 27. The app explains prerequisites for each selection.
+macOS 13+ on Apple Silicon or Intel; Node.js requires macOS 13.5+. The app asks before installing missing tools. For tig and native helpers, it can open Apple’s Command Line Tools installer and check completion before reviewing your selection again. Dock/launcher gestures target macOS 27.
 
 ---
 

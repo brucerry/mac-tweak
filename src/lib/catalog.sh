@@ -36,7 +36,7 @@ catalog_info() {
         }' "$SETUP_ROOT/catalog/releases.txt"
         case "$1" in
             gh) printf 'Manual steps: Use gh auth login separately if you need account access.\n' ;;
-            tig) printf 'Manual steps: Install Apple Command Line Tools yourself if preflight requests them.\n' ;;
+            tig) printf 'Prerequisites: Mac Tweak offers to install missing Apple Command Line Tools after approval.\n' ;;
             *) printf 'Manual steps: Open a new terminal after path integration; configure projects separately.\n' ;;
         esac
     fi

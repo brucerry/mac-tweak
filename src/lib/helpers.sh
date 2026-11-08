@@ -28,7 +28,7 @@ helper_plan() {
         if test "$existing" = 1 && test "${REPAIR_MODE:-0}" != 1; then
             block "$id: existing helper will be preserved before rebuilding; use the recommended repair review"; return 0
         fi
-        xcrun --find swiftc >/dev/null 2>&1 || { block "$id: install Apple Command Line Tools, then review again"; return 0; }
+        inspect_helper_prerequisites "$id" || { block "$id: Apple Command Line Tools are required; accept Install in Mac Tweak"; return 0; }
         index=${#HELPER_IDS[@]}; HELPER_IDS[$index]="$id" HELPER_NAMES[$index]="$name" HELPER_PATHS[$index]="$path" HELPER_HASHES[$index]="$fingerprint" HELPER_TREES[$index]="$(helper_tree_hash "$path")"
         printf 'HELPER_CHANGE [%s] Build %s from reviewed source; preserve any previous app. Quit an old running instance after a rebuild, then start explicitly after Apply.\n' "$id" "$name"
         printf 'REFRESH [%s] Open the installed helper in ~/Applications after Apply; choose startup in Preferences. Approve Accessibility for window gestures/closing.\n' "$id"

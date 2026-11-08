@@ -42,15 +42,29 @@ command_version() {
     [[ "$output" =~ $regex ]] || return 1
     printf '%s\n' "${BASH_REMATCH[0]}"
 }
+missing_command_line_tools() {
+    printf 'PREREQUISITE [command-line-tools] %s\n' "$1"
+    printf '%s\n' "$2"
+    return 1
+}
+inspect_helper_prerequisites() {
+    local developer compiler
+    developer=$(xcode-select -p 2>/dev/null) && test -d "$developer" || {
+        missing_command_line_tools "$1" 'Apple Command Line Tools are needed to build this helper. Accept Install in Mac Tweak to open Apple’s installer (xcode-select --install).'; return 1;
+    }
+    compiler=$(xcrun --find swiftc 2>/dev/null) && test -x "$compiler" && "$compiler" --version >/dev/null 2>&1 || {
+        missing_command_line_tools "$1" 'Apple Command Line Tools need a working Swift compiler.'; return 1;
+    }
+}
 inspect_tig_prerequisites() {
     local developer sdk
     developer=$(xcode-select -p 2>/dev/null) && test -d "$developer" || {
-        printf 'tig needs Apple Command Line Tools; run xcode-select --install yourself, finish installation, then retry.\n'; return 1;
+        missing_command_line_tools tig 'tig needs Apple Command Line Tools. Accept Install in Mac Tweak to open Apple’s installer (xcode-select --install).'; return 1;
     }
-    command -v git >/dev/null && command -v make >/dev/null || { printf 'tig needs Git and make.\n'; return 1; }
-    xcrun --find clang >/dev/null 2>&1 || { printf 'tig needs a working Command Line Tools compiler.\n'; return 1; }
-    sdk=$(xcrun --show-sdk-path 2>/dev/null) || return 1
-    test -f "$sdk/usr/include/curses.h" || { printf 'tig needs the SDK ncurses headers; repair Command Line Tools.\n'; return 1; }
-    test -e "$sdk/usr/lib/libncurses.tbd" && test -e "$sdk/usr/lib/libiconv.tbd" || { printf 'tig needs the SDK ncurses and iconv libraries.\n'; return 1; }
-    git --version >/dev/null && make --version >/dev/null && "$(xcrun --find clang)" --version >/dev/null || { printf 'tig needs working Git, make, and clang commands.\n'; return 1; }
+    command -v git >/dev/null && command -v make >/dev/null || { missing_command_line_tools tig 'tig needs Git and make.'; return 1; }
+    xcrun --find clang >/dev/null 2>&1 || { missing_command_line_tools tig 'tig needs a working Command Line Tools compiler.'; return 1; }
+    sdk=$(xcrun --show-sdk-path 2>/dev/null) || { missing_command_line_tools tig 'tig needs the Command Line Tools SDK.'; return 1; }
+    test -f "$sdk/usr/include/curses.h" || { missing_command_line_tools tig 'tig needs the SDK ncurses headers.'; return 1; }
+    test -e "$sdk/usr/lib/libncurses.tbd" && test -e "$sdk/usr/lib/libiconv.tbd" || { missing_command_line_tools tig 'tig needs the SDK ncurses and iconv libraries.'; return 1; }
+    git --version >/dev/null && make --version >/dev/null && "$(xcrun --find clang)" --version >/dev/null || { missing_command_line_tools tig 'tig needs working Git, make, and clang commands.'; return 1; }
 }

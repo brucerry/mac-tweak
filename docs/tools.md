@@ -35,7 +35,7 @@ can offer a new version in the next plan; no tool is upgraded in the background.
 The previous managed version is retained. A download, build, or staging check
 failure leaves the prior active version intact.
 
-## Prerequisites and manual steps
+## Prerequisites and approvals
 
 Binary components use macOS curl, tar (including ZIP support), and shasum. The
 runner's first invocation needs no package manager or installed development
@@ -43,8 +43,17 @@ runtime. uv does not install a Python runtime just by being selected; project
 and Python environment configuration happens when you use uv later.
 
 Tig requires working Git and Apple Command Line Tools, including make, clang,
-and the SDK's ncurses/iconv support. When missing, run `xcode-select --install`
-yourself, finish installation, and retry. Setup never starts that installation.
+and the SDK's ncurses/iconv support. Native helpers also require a working Swift
+compiler. When these prerequisites are missing, Mac Tweak names the affected
+selections and offers **Install** or **Later**. Install opens
+[Apple’s official installer](https://developer.apple.com/documentation/xcode/installing-the-command-line-tools)
+using `xcode-select --install`. Finish any download, license or administrator
+approval in that installer. Mac Tweak checks the required tools asynchronously,
+then reviews the same selection again before offering Apply. A successful
+installer request alone is never treated as a completed installation.
+**Stop waiting** ends the check; Apple’s installer can continue independently.
+Changing the selection or quitting also discards the pending continuation.
+No system installer starts during Review or Verify without this separate approval.
 The build explicitly uses native CPU targeting and system libraries, and uses
 Tig's documented compatibility option when the compiler cannot include wordexp.
 

@@ -13,7 +13,7 @@ mkdir "$CASE_HOME"
 test "${HOME:-}" != "$CASE_HOME" || exit 1
 run_setup() { env HOME="$CASE_HOME" PATH=/usr/bin:/bin:/usr/sbin:/sbin /bin/bash "$TEST_REPO/tweak.sh" "$@"; }
 assert_contains() { case "$1" in *"$2"*) ;; *) printf 'Missing: %s\nIn: %s\n' "$2" "$1" >&2; exit 1 ;; esac; }
-for check_file in "$TEST_REPO/tweak.sh" "$TEST_REPO/src/cli.sh" "$TEST_REPO"/src/lib/*.sh "$TEST_REPO"/src/components/{tools,terminal,preferences,profiles,guided}/*.sh; do /bin/bash -n "$check_file"; done
+for check_file in "$TEST_REPO/tweak.sh" "$TEST_REPO/src/cli.sh" "$TEST_REPO"/src/lib/*.sh "$TEST_REPO"/src/prerequisites/*.sh "$TEST_REPO"/src/components/{tools,terminal,preferences,profiles,guided}/*.sh; do /bin/bash -n "$check_file"; done
 if test "${1:-}" = --terminal; then . "$TEST_REPO/tests/terminal.sh"; exit 0; fi
 assert_contains "$(run_setup --help)" 'Usage:'
 test -z "$(find "$CASE_HOME" -mindepth 1 -print)"
@@ -71,6 +71,7 @@ python3 "$TEST_REPO/tests/launchers.py"
 python3 "$TEST_REPO/tests/gui.py"
 python3 "$TEST_REPO/tests/verification.py"
 python3 "$TEST_REPO/tests/repair.py"
+python3 "$TEST_REPO/tests/prerequisites.py"
 /usr/bin/osascript -l JavaScript "$TEST_REPO/tests/preferences-model.js" "$TEST_REPO"
 python3 "$TEST_REPO/tests/preferences.py"
 python3 "$TEST_REPO/tests/preferences-races.py"
